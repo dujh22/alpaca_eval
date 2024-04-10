@@ -1,11 +1,12 @@
-# <a href="https://tatsu-lab.github.io/alpaca_eval/" target="_blank"><img src="https://raw.githubusercontent.com/tatsu-lab/alpaca_eval/main/docs/AlpacaFarm_small.png" width="35"></a> [AlpacaEval](https://tatsu-lab.github.io/alpaca_eval/) : 遵循指令的语言模型自动评估器
+# <a href="https://tatsu-lab.github.io/alpaca_eval/" target="_blank"><img src="https://raw.githubusercontent.com/tatsu-lab/alpaca_eval/main/docs/AlpacaFarm_small.png" width="35"></a> [AlpacaEval](https://tatsu-lab.github.io/alpaca_eval/) : An Automatic Evaluator for Instruction-following Language Models
 
 [![Code License](https://img.shields.io/badge/Code%20License-Apache_2.0-green.svg)](https://github.com/tatsu-lab/alpaca_farm/blob/main/LICENSE)
 [![Data License](https://img.shields.io/badge/Data%20License-CC%20By%20NC%204.0-red.svg)](https://github.com/tatsu-lab/alpaca_farm/blob/main/DATA_LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/release/python-3100/)
 [![discord](https://img.shields.io/badge/discord-server-blue?logo=discord&logoColor=white)](https://discord.gg/GJMxJSVZZM)
 
-采用长度控制胜率的 **AlpacaEval 2.0** 与 [ChatBot Arena](https://huggingface.co/spaces/lmsys/chatbot-arena-leaderboard) 的斯皮尔曼相关性为 **0.98**，而运行成本不到 **10 美元** OpenAI 信用点，运行时间不到 3 分钟。我们的目标是为聊天 LLM 提供一个基准：快速（< 5 分钟）、便宜（< 10 美元）、与人类高度相关（0.98）。下面是与其他基准的比较：
+
+**AlpacaEval 2.0 with length-controlled win-rates** has a spearman correlation of **0.98** with [ChatBot Arena](https://huggingface.co/spaces/lmsys/chatbot-arena-leaderboard) while costing less than **$10** of OpenAI credits run and running in less than 3 minutes. Our goal is to have a benchmark for chat LLMs that is: fast (< 5min), cheap (< $10), and highly correlated with humans (0.98). Here's a comparison with other benchmarks:
 
 <p float="left" align="middle">
 <img src="figures/chat_correlations_no_ae.png" alt="LC AlpacaEval is the most highly correlated benchmark with Chat Arena." width="500"/>
@@ -13,22 +14,22 @@
 
 ---
 
-更新：
+Updates:
 
-:tada: **长度控制胜率** 已发布并默认使用！这将把与 ChatBot Arena 的相关性从 0.93 提高到 0.98，同时大大降低了长度游戏性。原始胜率仍显示在网站和 CLI 上。更多详情 [点击此处](#length-controlled-win-rates).
+:tada: **Length-controlled Win Rates** are out and used by default! This increases the correlation with ChatBot Arena from 0.93 to 0.98, while significantly decreasing length gameability. The raw win rates are still shown on the website and the CLI. More details [here](#length-controlled-win-rates).
 
-:tada: **AlpacaEval 2.0** 已发布并默认使用！我们改进了自动注释器（更好、更便宜），并使用 GPT-4 预览作为基准。更多详情 [点击此处](#alpacaeval-20). 要使用旧版本，请设置环境变量`IS_ALPACA_EVAL_2=False`.
+:tada: **AlpacaEval 2.0** is out and used by default! We improved the auto-annotator (better and cheaper) and use GPT-4 preview as baseline. More details [here](#alpacaeval-20). For the old version, set your environment variable `IS_ALPACA_EVAL_2=False`.
 
 ---
 
 <details open>
   <summary><b>Table of Contents</b></summary>
 
-1. [概述](#overview)
+1. [Overview](#overview)
 2. [Quick Start](#quick-start)
 2. [Leaderboards and how to interpret them](#leaderboards-and-how-to-interpret-them)
     - [Models](#models)
-    - [评估](#评估)
+    - [Evaluators](#evaluators)
 3. [Use-cases](#use-cases)
     - [Evaluating a model](#evaluating-a-model)
     - [Making a new leaderboard](#making-a-new-leaderboard)
@@ -38,7 +39,7 @@
     - [Contributing an evaluator](#contributing-an-evaluator)
     - [Contributing an eval set](#contributing-an-eval-set)
     - [Contributing a completion function](#contributing-a-completion-function)
-5. [限制](#限制)
+5. [Limitations](#limitations)
 6. [Analysis](#additional-analysis-and-plots)
     - [Analyzing an evaluator](#analyzing-an-evaluator)
     - [Analyzing an eval set](#analyzing-an-eval-set)
@@ -54,15 +55,27 @@
 
 </details>
 
-# 概述
+# Overview
 
-对指令遵循模型(例如，ChatGPT)的评估通常需要人工交互。这既耗时又昂贵，而且很难复制。AlpacaEval是一个基于llm的自动评估，它快速、廉价、可复制，并针对20K个人工注释进行了验证。它对模型开发特别有用。尽管我们对之前的自动评估管道进行了改进，但仍然存在基本的[限制](#限制)，比如对更长的输出的偏好。
 
-AlpacaEval提供以下功能：
+Evaluation of instruction-following models (e.g., ChatGPT) typically requires human interactions. This is
+time-consuming, expensive, and hard to replicate. AlpacaEval in an LLM-based automatic evaluation that is fast, cheap,
+replicable, and validated against 20K human annotations.
+It is particularly useful for model development.
+Although we improved over prior automatic evaluation pipelines, there are still fundamental [limitations](#limitations) like the preference for longer outputs.
+AlpacaEval provides the following:
 
-- [**排行榜**](https://tatsu-lab.github.io/alpaca_eval/): AlpacaEval评估集上常用模型的排行榜。**警告**:自动评估器(如GPT-4)可能偏向于产生较长输出的模型和/或在评估器底层模型上进行微调的模型(如GPT-4)。
-- [**自动评估器**](#评估): 与人类高度一致的自动评估器(在20K个注释上进行了验证)。我们通过测量强大的LLM(例如GPT-4)倾向于该模型的输出而不是参考模型的输出的次数来评估模型。默认情况下，我们的评估器启用缓存和输出随机化。
-- [**用于构建自动评估器的工具包**](#analysis): 一个简单的接口，用于构建高级自动评估器(例如，使用缓存、批处理或多注释器)并分析它们(质量、价格、速度、统计能力、偏差、方差等)。
+- [**Leaderboard**](https://tatsu-lab.github.io/alpaca_eval/): a leaderboard of common models on the AlpacaEval
+  evaluation set. **Caution**: Automatic evaluators (e.g. GPT-4) may be biased towards models that generate longer outputs and/or that were fine-tuned on the model underlying the evaluator (e.g. GPT-4).
+- [**Automatic evaluator**](#evaluators): an automatic evaluator that has high agreement with humans (validated on 20K
+  annotations). We evaluate a
+  model by
+  measuring the fraction of times a powerful LLM (e.g. GPT-4) prefers the outputs from that model
+  over
+  outputs from a reference model. Our evaluators enable caching and output randomization by default.
+- [**Toolkit for building automatic evaluators**](#analysis): a simple interface for
+  building advanced automatic evaluators (e.g. with caching, batching, or multi-annotators) and analyzing them (quality,
+  price, speed, statistical power, bias, variance etc).
 - [**Human evaluation data**](#data-release): 20K human preferences between a given and reference model
   on the [AlpacaFarm](https://github.com/tatsu-lab/alpaca_farm/tree/main)
   evaluation set. 2.5K of these are cross-annotations (4 humans annotating the same 650 examples).
@@ -238,7 +251,7 @@ see [configs](#https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eva
 
 
 
-## 评估
+## Evaluators
 
 We evaluate different automatic annotators on the AlpacaEval set by comparing to
 2.5K [human annotations](https://huggingface.co/datasets/tatsu-lab/alpaca_eval/blob/main/alpaca_farm_human_crossannotations.json)
@@ -885,7 +898,7 @@ git add -f results/<model_name>/model_outputs.json
 git add -f results/<model_name>/*/annotations.json
 git commit -m "Add <model_name> to AlpacaEval"
 git push
-```
+``` 
 5. Create a [pull request on AlpacaEval](https://github.com/tatsu-lab/alpaca_eval/pulls)
 
 Note: if you are generating outputs outside of AlpacaEval you should still add a model config but with `fn_completions: null`. 
@@ -973,7 +986,7 @@ Feel free to start a PR early, we'll be able to provide some help in the process
 
 </details>
 
-# 限制
+# Limitations
 
 The AlpacaEval evaluation pipeline, like other current evaluators have important limitations and should therefore not be
 used as replacement for human evaluation in important settings, such as to decide whether a model is ready to be
@@ -1031,17 +1044,17 @@ instructions where Alpaca "performs" better than better model; and
 
 **Caution**: all the following results are about AlpacaEval 1.0 and have not been updated since
 
-[//]: # "AlpacaEval provides a few visualization tools to help you analyze and improve your automatic evaluation pipeline. We"
+[//]: # (AlpacaEval provides a few visualization tools to help you analyze and improve your automatic evaluation pipeline. We)
 
-[//]: # "briefly explain"
+[//]: # (briefly explain)
 
-[//]: # "them here and provide"
+[//]: # (them here and provide)
 
-[//]: # "notebooks for more analysis. "
+[//]: # (notebooks for more analysis. )
 
-[//]: # "For a description of all the metrics we consider"
+[//]: # (For a description of all the metrics we consider)
 
-[//]: # "refer to [How exactly are those metrics computed?]&#40;https://github.com/tatsu-lab/alpaca_eval#evaluators&#41;"
+[//]: # (refer to [How exactly are those metrics computed?]&#40;https://github.com/tatsu-lab/alpaca_eval#evaluators&#41;)
 
 ## Length-controlled AlpacaEval (LCAE)
 
@@ -1086,7 +1099,7 @@ Finally, note that we are only controlling for length bias. There are other know
 <details>
   <summary><h2 tabindex="-1" dir="auto">Analyzing an evaluator</h2></summary>
 
-[//]: # "## Analyzing an evaluator"
+[//]: # (## Analyzing an evaluator)
 
 **Caution**: all the following results are about AlpacaEval 1.0 and have not been updated since
 
@@ -1132,7 +1145,7 @@ colab notebook above.
 <details>
   <summary><h2 tabindex="-1" dir="auto">Analyzing an eval set</h2></summary>
 
-[//]: # "## Analyzing an eval set"
+[//]: # (## Analyzing an eval set)
 
 **Caution**: all the following results are about AlpacaEval 1.0 and have not been updated since.
 
