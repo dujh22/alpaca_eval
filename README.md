@@ -1,4 +1,4 @@
-# <a href="https://tatsu-lab.github.io/alpaca_eval/" target="_blank"><img src="https://raw.githubusercontent.com/tatsu-lab/alpaca_eval/main/docs/AlpacaFarm_small.png" width="35"></a> [AlpacaEval](https://tatsu-lab.github.io/alpaca_eval/) : 遵循指令的语言模型自动评估器
+# `<a href="https://tatsu-lab.github.io/alpaca_eval/" target="_blank"><img src="https://raw.githubusercontent.com/tatsu-lab/alpaca_eval/main/docs/AlpacaFarm_small.png" width="35">``</a>` [AlpacaEval](https://tatsu-lab.github.io/alpaca_eval/) : 遵循指令的语言模型自动评估器
 
 [![Code License](https://img.shields.io/badge/Code%20License-Apache_2.0-green.svg)](https://github.com/tatsu-lab/alpaca_farm/blob/main/LICENSE)
 [![Data License](https://img.shields.io/badge/Data%20License-CC%20By%20NC%204.0-red.svg)](https://github.com/tatsu-lab/alpaca_farm/blob/main/DATA_LICENSE)
@@ -15,37 +15,36 @@
 
 更新：
 
-:tada: **长度控制胜率** 已发布并默认使用！这将把与 ChatBot Arena 的相关性从 0.93 提高到 0.98，同时大大降低了长度游戏性。原始胜率仍显示在网站和 CLI 上。更多详情 [点击此处](#length-controlled-win-rates).
+🎉 **长度控制胜率** 已发布并默认使用！这将把与 ChatBot Arena 的相关性从 0.93 提高到 0.98，同时大大降低了长度游戏性。原始胜率仍显示在网站和 CLI 上。更多详情 [点击此处](#length-controlled-win-rates).
 
-:tada: **AlpacaEval 2.0** 已发布并默认使用！我们改进了自动注释器（更好、更便宜），并使用 GPT-4 预览作为基准。更多详情 [点击此处](#alpacaeval-20). 要使用旧版本，请设置环境变量`IS_ALPACA_EVAL_2=False`.
+🎉 **AlpacaEval 2.0** 已发布并默认使用！我们改进了自动注释器（更好、更便宜），并使用 GPT-4 预览作为基准。更多详情 [点击此处](#alpacaeval-20). 要使用旧版本，请设置环境变量 `IS_ALPACA_EVAL_2=False`.
 
 ---
 
 <details open>
   <summary><b>目录</b></summary>
 
-
 1. [概述](#overview)
 2. [快速开始](#快速开始)
-2. [排行榜和如何解读排行榜](#排行榜和如何解读排行榜)
-    - [模型](#模型)
-    - [评估](#评估)
-3. [使用案例](#使用案例)
-    - [评估一个模型](#评估一个模型)
-    - [制作新的排行榜](#制作新的排行榜)
-    - [制作一个新的评估器](#制作一个新的评估器)
-4. [贡献](#贡献)
-    - [提供模型](#提供模型)
-    - [验证模型](#验证模型)
-    - [提供一名评估员](#提供一名评估员)
-    - [贡献一个评估集](#贡献一个评估集)
-    - [提供完成功能](#提供完成功能)
-5. [限制](#限制)
-6. [分析](#其他分析和绘图)
-    - [分析一个评估器](#分析一个评估器)
-    - [分析一个评估数据集](#分析一个评估数据集)
-7. [引用](#引用)
-8. [更多信息](#更多信息)
+3. [排行榜和如何解读排行榜](#排行榜和如何解读排行榜)
+   - [模型](#模型)
+   - [评估](#评估)
+4. [使用案例](#使用案例)
+   - [评估一个模型](#评估一个模型)
+   - [制作新的排行榜](#制作新的排行榜)
+   - [制作一个新的评估器](#制作一个新的评估器)
+5. [贡献](#贡献)
+   - [提供模型](#提供模型)
+   - [验证模型](#验证模型)
+   - [提供一名评估员](#提供一名评估员)
+   - [贡献一个评估集](#贡献一个评估集)
+   - [提供完成功能](#提供完成功能)
+6. [限制](#限制)
+7. [分析](#其他分析和绘图)
+   - [分析一个评估器](#分析一个评估器)
+   - [分析一个评估数据集](#分析一个评估数据集)
+8. [引用](#引用)
+9. [更多信息](#更多信息)
    - [长度控制胜率](#长度控制胜率)
    - [AlpacaEval 2.0](#alpacaeval-20)
    - [数据发布](#数据发布)
@@ -79,6 +78,7 @@ AlpacaEval提供以下功能：
 **何时不使用 AlpacaEval？**
 
 与其他任何自动评估工具一样，AlpacaEval **不应在高风险决策**（如决定是否发布模型）中取代人工评估。AlpacaEval 尤其受到以下事实的限制
+
 (1) 评估集中的指令可能无法代表 LLM 的高级用法；
 
 (2) 自动评价器可能存在偏差，例如偏重风格而非事实性；
@@ -88,7 +88,6 @@ AlpacaEval提供以下功能：
 具体细节参照[限制](#限制)。
 
 </details>
-
 
 # 快速开始
 
@@ -163,7 +162,7 @@ alpaca_eval --model_outputs 'example/outputs.json'
 **AlpacaEval 最小排行榜**:
 
 |                       | Win Rate | Std Error |
-|:----------------------|---------:|----------:|
+| :-------------------- | -------: | --------: |
 | gpt4                  |     95.3 |       0.7 |
 | claude                |     88.4 |       1.1 |
 | chatgpt               |     86.1 |       1.2 |
@@ -181,7 +180,7 @@ alpaca_eval --model_outputs 'example/outputs.json'
 更具体地说，为了计算胜率，我们从 ApacaEval 数据集中收集了所需模型在每条指令上的输出对。
 然后，我们将每个输出与我们的参考模型（例如 `text-davinci-003`）在同一指令上的输出配对。
 然后，我们会询问我们的自动评估员他们更喜欢哪种输出。
-参见 [AlpacaEval's](https://github.com/tatsu-lab/alpaca_eval/tree/main/src/alpaca_eval/evaluators_configs/alpaca_eval_gpt4) 和 [AlpacaEval 2.0's](https://github.com/tatsu-lab/alpaca_eval/tree/main/src/alpaca_eval/evaluators_configs/weighted_alpaca_eval_gpt4_turbo) 的提示和配置，特别是我们会随机调整输出的顺序，以避免位置偏差。
+参见 [AlpacaEval&#39;s](https://github.com/tatsu-lab/alpaca_eval/tree/main/src/alpaca_eval/evaluators_configs/alpaca_eval_gpt4) 和 [AlpacaEval 2.0&#39;s](https://github.com/tatsu-lab/alpaca_eval/tree/main/src/alpaca_eval/evaluators_configs/weighted_alpaca_eval_gpt4_turbo) 的提示和配置，特别是我们会随机调整输出的顺序，以避免位置偏差。
 然后，我们对数据集中的所有指令的偏好进行平均，得出模型相对于基线的胜率。
 如果两个输出完全相同，我们会对两个模型使用一半的偏好。
 
@@ -195,11 +194,8 @@ alpaca_eval --model_outputs 'example/outputs.json'
 我们的 alpaca_eval_gpt4（参见 [configs](#https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/evaluators_configs/alpaca_eval_gpt4/configs.yaml#L5)）注释器对偏好进行平均，偏好的获取方式如下：
 
 1. 它接收一条指令和一对输出（来自期望模型和参考模型）
-
 2. 如果已经计算出这三者的偏好值，则返回该偏好值（即使用缓存）
-
 3. 随机调整输出的顺序，以避免位置偏差
-
 4. 将指令和输出格式化为零次提示 [following zero-shot prompt](https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/evaluators_configs/alpaca_eval_gpt4/alpaca_eval.txt),，要求按偏好顺序排列输出
 5. 使用 GPT4 完成提示，温度=0
 6. 解析完成后的偏好并返回
@@ -219,22 +215,20 @@ alpaca_eval --model_outputs 'example/outputs.json'
 下面我们展示了我们建议的评估器（weighted_alpaca_eval_gpt4_turbo,alpaca_eval_gpt4）、先前的自动评估器（[`alpaca_farm_greedy_gpt4`](https://github.com/tatsu-lab/alpaca_farm),[`aviary_gpt4`](https://aviary.anyscale.com/),[`lmsys_gpt4`](https://chat.lmsys.org/)）、人类（humans）以及具有基本相同提示的不同基础模型（gpt4,claude,text_davinci_003,chatgpt_fn,guanaco_33b,chatgpt）的指标。
 有关开箱即用的所有评估器的配置及其相关指标，请参见[此处](https://github.com/tatsu-lab/alpaca_eval/tree/main/src/alpaca_eval/evaluators_configs)。
 
-|                                 |   Human agreement |   Price [$/1000 examples] |   Time [seconds/1000 examples] |   Spearman corr. |   Pearson corr. |   Bias |   Variance |   Proba. prefer longer |
-|:--------------------------------|------------------:|--------------------------:|-------------------------------:|-----------------:|----------------:|-------:|-----------:|-----------------------:|
-| alpaca_eval_gpt4                |              69.2 |                      13.6 |                           1455 |             0.97 |            0.93 |   28.4 |       14.6 |                   0.68 |
-| alpaca_eval_cot_gpt4_turbo_fn   |              68.6 |                       6.3 |                           1989 |             0.97 |            0.90 |   29.3 |       18.4 |                   0.67 |
-| alpaca_eval_gpt4_turbo_fn       |              68.1 |                       5.5 |                            864 |             0.93 |            0.82 |   30.2 |       15.6 |                   0.65 |
-| gpt4                            |              66.9 |                      12.5 |                           1037 |             0.88 |            0.87 |   31.5 |       14.6 |                   0.65 |
-| alpaca_farm_greedy_gpt4         |              66.4 |                      15.3 |                            878 |             0.85 |            0.75 |   30.2 |       19.3 |                   0.60 |
-| alpaca_eval_cot_gpt4_turbo_fn |              65.7 |                       4.3 |                            228 |             0.78 |            0.77 |   33.9 |       23.7 |                   0.61 |
-| humans                          |              65.7 |                     300.0 |                          36800 |             1.00 |            1.00 |    0.0 |       34.3 |                   0.64 |
-| claude                          |              65.3 |                       3.3 |                            173 |             0.93 |            0.90 |   32.4 |       18.5 |                   0.66 |
-| lmsys_gpt4                      |              65.3 |                      13.9 |                          17982 |             0.98 |            0.97 |   31.6 |       15.9 |                   0.74 |
-| text_davinci_003                |              64.1 |                       8.7 |                            121 |             0.85 |            0.83 |   33.8 |       22.7 |                   0.70 |
-| longest                         |              62.2 |                       0.0 |                              0 |             0.27 |            0.56 |   37.8 |        0.0 |                   1.00 |
-| chatgpt                         |              57.3 |                       0.8 |                            285 |             0.72 |            0.71 |   39.4 |       34.1 |                   0.59 |
-
-
+|                               | Human agreement | Price [$/1000 examples] | Time [seconds/1000 examples] | Spearman corr. | Pearson corr. | Bias | Variance | Proba. prefer longer |
+| :---------------------------- | --------------: | ----------------------: | ---------------------------: | -------------: | ------------: | ---: | -------: | -------------------: |
+| alpaca_eval_gpt4              |            69.2 |                    13.6 |                         1455 |           0.97 |          0.93 | 28.4 |     14.6 |                 0.68 |
+| alpaca_eval_cot_gpt4_turbo_fn |            68.6 |                     6.3 |                         1989 |           0.97 |          0.90 | 29.3 |     18.4 |                 0.67 |
+| alpaca_eval_gpt4_turbo_fn     |            68.1 |                     5.5 |                          864 |           0.93 |          0.82 | 30.2 |     15.6 |                 0.65 |
+| gpt4                          |            66.9 |                    12.5 |                         1037 |           0.88 |          0.87 | 31.5 |     14.6 |                 0.65 |
+| alpaca_farm_greedy_gpt4       |            66.4 |                    15.3 |                          878 |           0.85 |          0.75 | 30.2 |     19.3 |                 0.60 |
+| alpaca_eval_cot_gpt4_turbo_fn |            65.7 |                     4.3 |                          228 |           0.78 |          0.77 | 33.9 |     23.7 |                 0.61 |
+| humans                        |            65.7 |                   300.0 |                        36800 |           1.00 |          1.00 |  0.0 |     34.3 |                 0.64 |
+| claude                        |            65.3 |                     3.3 |                          173 |           0.93 |          0.90 | 32.4 |     18.5 |                 0.66 |
+| lmsys_gpt4                    |            65.3 |                    13.9 |                        17982 |           0.98 |          0.97 | 31.6 |     15.9 |                 0.74 |
+| text_davinci_003              |            64.1 |                     8.7 |                          121 |           0.85 |          0.83 | 33.8 |     22.7 |                 0.70 |
+| longest                       |            62.2 |                     0.0 |                            0 |           0.27 |          0.56 | 37.8 |      0.0 |                 1.00 |
+| chatgpt                       |            57.3 |                     0.8 |                          285 |           0.72 |          0.71 | 39.4 |     34.1 |                 0.59 |
 
 <details>
   <summary><b>这些指标究竟是如何计算出来的？</b></summary>
@@ -271,7 +265,6 @@ above. [The code is here](https://github.com/tatsu-lab/alpaca_eval/blob/f05cbd65
 就人类而言，根据定义，偏差为零。
 请注意，这与标准统计偏差有关，但不是标准统计偏差，因为我们采用的是模式而不是注释的平均值，我们考虑的是 0-1 损失而不是平方损失。
 
-
 **Variance方差**：单个自动偏好与最可能偏好的预期一致度。我们估算它的方法与估算人类 "人类一致性 "的方法相同，即在使用第 4 个注释预测 3 个注释的模式时，我们取预期的遗漏误差。
 低方差意味着注释者与其偏好是一致的，也就是说，如果用不同的种子进行采样，结果是一样的。
 与偏差一样，这并不完全是标准的统计方差，因为我们采用的是模式而不是注释的平均值，我们考虑的是 0-1 损失而不是平方损失。
@@ -298,7 +291,7 @@ above. [The code is here](https://github.com/tatsu-lab/alpaca_eval/blob/f05cbd65
 
 在选择注释器时，我们建议您考虑以下几点（前三点显而易见）：
 
-- "人工同意率 [%]" 
+- "人工同意率 [%]"
 - "价格[$/1000 个示例]"
 - "时间[秒/1000 个示例]"
 - `"* corr."` 大约 > 0.7。相关性不能太低，这一点很重要，但我们不建议将其作为主要指标，因为相关性只根据 9 个模型计算。
@@ -314,7 +307,6 @@ above. [The code is here](https://github.com/tatsu-lab/alpaca_eval/blob/f05cbd65
 详情请见 [限制](#limitations)。
 
 # 使用案例
-
 
 ## 评估一个模型
 
@@ -493,7 +485,7 @@ alpaca_eval --model_outputs 'example/outputs.json' \
 # need a GPU for local models
 alpaca_eval evaluate_from_model \
   --model_configs 'oasst_pythia_12b' \
-  --annotators_config 'alpaca_eval_gpt4_turbo_fn'      
+  --annotators_config 'alpaca_eval_gpt4_turbo_fn'    
 ```
 
 此处的 `model_configs` 和 `reference_model_configs`（可选）是指向指定提示符、模型提供者（此处为 HuggingFace）和解码参数的目录的路径。
@@ -512,7 +504,6 @@ alpaca_eval evaluate_from_model \
 </details>
 
 ## 制作新的排行榜
-
 
 <details>
   <summary><code>>>> alpaca_eval make_leaderboard -- --help</code></summary>
@@ -582,7 +573,6 @@ alpaca_eval make_leaderboard \
 </details>
 
 ## 制作一个新的评估器
-
 
 <details>
   <summary><code>>>> alpaca_eval analyze_evaluators -- --help</code></summary>
@@ -658,8 +648,6 @@ AlpacaEval 提供了一种制作新评估器的简单方法。你只需创建一
 - 更改解码参数**： 在配置文件的 `completions_kwargs` 中指定所需的参数。要查看所有可用参数，请参阅配置文件中 `fn_completions` 指定的[本文件中](https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/decoders/__init__.py) 相应函数的 docstrings。
 - 更改模型**： 在 `model_name` 中指定所需的模型，并在 `prompt_template` 中指定相应的提示。如果模型来自其他提供商，则必须更改 `fn_completions`，该函数映射到 [this file](https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/decoders/__init__.py) 中的相应函数。我们提供了 `fn_completions` 函数，以便使用 OpenAI、Anthropic、Cohere 或 HuggingFace 的模型。要安装所有提供者所需的软件包，请使用 `pip install alpaca_eval[all]`。
 
-
-
 <details>
   <summary><b>配置文件中的其他参数</b></summary>
 
@@ -699,7 +687,7 @@ batch_size : int
 制作评价器后，您还可以使用以下命令对其进行分析，并将其添加到_评价器的_[排行榜](#evaluators)中：
 
 ```bash
-alpaca_eval analyze_evaluators --annotators_config '<path_to_config.yaml>'    
+alpaca_eval analyze_evaluators --annotators_config '<path_to_config.yaml>'  
 ```
 
 为了估算偏差和方差，它会用 4 个种子对每个示例进行评估，即 2.5K 评估。
@@ -737,6 +725,7 @@ alpaca_eval evaluate_from_model \
 2. 克隆分叉仓库 `git clone <URL>` 3.
 3. 在 `src/alpaca_eval/models_configs/<model_name>` 中创建模型配置并对其进行评估 `evaluate_from_model --model_configs '<model_name>'`
 4. 将模型配置、输出和排行榜条目添加到分叉版本库中
+
 ```sh
 git add src/alpaca_eval/models_configs/<model_name>
 git add src/alpaca_eval/leaderboards/ 
@@ -745,13 +734,13 @@ git add -f results/<model_name>/*/annotations.json
 git commit -m "Add <model_name> to AlpacaEval"
 git push
 ```
+
 5. 在 AlpacaEval 上创建一个[pull request on AlpacaEval](https://github.com/tatsu-lab/alpaca_eval/pulls)。
 
 注意：如果您要在 AlpacaEval 之外生成输出，则仍应添加模型配置，但应使用 `fn_completions:null`。
 请参阅 [this config](https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/models_configs/dolphin-2.2.1-mistral-7b/configs.yaml) 获取示例。
 
 ## 验证模型
-
 
 <p align="center">
 <img align="center" alt="verified.png" src="figures/verified.png" width="500"/>
@@ -806,16 +795,14 @@ alpaca_eval make_leaderboard \
 
 请提交 PR，并附上评估集 json 和相应的排行榜 csv。
 
-
 </details>
-
-
 
 <details>
   <summary><h2 tabindex="-1" dir="auto">提供完成功能</h2></summary>
 
 目前，我们允许使用不同的完成函数，例如：`openai`, `anthropic`, `huggingface_local`, `huggingface_hub_api`... 如果您想贡献一个新的完成函数/API 来执行推理，请按照以下步骤操作：
-1. 在 [decoder 文件夹](https://github.com/tatsu-lab/alpaca_eval/tree/main/src/alpaca_eval/decoders) 中添加 <name>.py 文件和函数 `<name>_completions(prompts : Sequence[str], model_name :str, ...)`。该函数应将 prompts + kwargs 作为参数，并返回补全信息。请查看该目录中的其他补全函数模板。例如，[huggingface_local_completions](https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/decoders/huggingface_local.py) 或 [anthropic](https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/decoders/anthropic.py)。
+
+1. 在 [decoder 文件夹](https://github.com/tatsu-lab/alpaca_eval/tree/main/src/alpaca_eval/decoders) 中添加 `<name>`.py 文件和函数 `<name>_completions(prompts : Sequence[str], model_name :str, ...)`。该函数应将 prompts + kwargs 作为参数，并返回补全信息。请查看该目录中的其他补全函数模板。例如，[huggingface_local_completions](https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/decoders/huggingface_local.py) 或 [anthropic](https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/decoders/anthropic.py)。
 2. 在 [__init__](https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/decoders/__init__.py)中添加 `<name>_completions` 和依赖项。同样，您也可以效仿 [huggingface_local_completions](https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/decoders/__init__.py#L30) 的做法。
 3. 更新 [setup.py](https://github.com/tatsu-lab/alpaca_eval/blob/main/setup.py) 中的可选依赖项
 4. 在 [models configs](https://github.com/tatsu-lab/alpaca_eval/tree/main/src/alpaca_eval/models_configs) 中添加要评估的模型。
@@ -823,6 +810,7 @@ alpaca_eval make_leaderboard \
 6. (可选）按照 [这些步骤](https://github.com/tatsu-lab/alpaca_eval/tree/main#contributing-a-model) 将上一个模型的结果推送到 AlpacaEval 排行榜上。
 
 请随时提前启动 PR，我们将在此过程中提供一些帮助！
+
 </details>
 
 # 限制
@@ -833,11 +821,9 @@ AlpacaEval 评估流水线与目前的其他评估工具一样，都有很大的
 1. **指令可能并不代表实际使用情况**：AlpacaEval 集包含来自各种数据集的示例（[self-instruct](https://github.com/yizhongw/self-instruct)、[open-assistant(https://huggingface.co/datasets/OpenAssistant/oasst1/viewer/OpenAssistant--oasst1/validation)、[vicuna](https://lmsys.org/blog/2023-03-30-vicuna/)、[koala](https://github.com/arnav-gudibande/koala-test-set)、[hh-rlhf](https://huggingface.co/datasets/Anthropic/hh-rlhf/viewer/Anthropic--hh-rlhf/test)），这些示例可能并不代表实际使用情况和更好模型（如 GPT4）的高级应用。这很可能使最好的封闭模型（GPT4 / Claude / ChatGPT / ......）看起来与开放模型更为相似。事实上，这些封闭模型似乎是在更多样化的数据上进行预训练/调整的。关于更复杂指令的初步结果，请参见 [this blog](https://medium.com/@marcotcr/exploring-chatgpt-vs-open-source-models-on-slightly-harder-tasks-aa0395c31610)。
    不过请注意，在 [AlpacaFarm](https://arxiv.org/abs/2305.14387) 中，我们表明我们的评估集的胜率与用户与 Alpaca Demo 交互指令的胜率高度相关（0.97 R2）。
    此外，AlpacaEval 排行榜显示开放模型与 OpenAI 模型之间的差距大于其他排行榜（例如 [lmsys](https://lmsys.org/blog/2023-03-30-vicuna/)）。
-
 2. **自动注释器的偏差**：原始自动注释器似乎有隐含的偏差。特别是，我们发现他们倾向于较长的输出和包含列表的输出（例如，"alpaca_eval_gpt4 "为 0.68 / 0.69，"claude "为 0.62 / 0.58）。
    虽然我们发现人类也有类似的偏差（0.64 / 0.61），但我们认为这可能更多是我们使用的人类注释管道的限制，而不是真正的人类偏差。更广泛地说，通过定性分析，我们发现自动注释者更重视输出的风格而非内容（如事实性）。
    最后，我们发现自动评估者倾向于选择来自相似模型的输出结果（很可能是在相同的数据上训练出来的），这一点从 ChatGPT/GPT4 在 `claude` 和 `alpaca_eval_gpt4` 排行榜上的巨大差异可以看出。请注意，长度偏差在我们的长度控制胜率中得到了部分缓解。
-   
 3. **缺乏安全评估**：重要的是，AlpacaEval 只评估模型的指令执行能力，而不是它们可能造成的危害（如有毒行为或偏差）。因此，当前 ChatGPT 与最佳开源模型之间的微小差距***不应被解释为后者已经可以部署。
 
 除了这些关于评估管道的局限性之外，我们对评估者的验证以及我们选择评估集的[建议方法]（#分析一个评估集）也存在局限性。
@@ -853,16 +839,13 @@ AlpacaEval 评估流水线与目前的其他评估工具一样，都有很大的
 
 </details>
 
-
 # 其他分析和绘图
 
 **注意**：以下所有结果均与 AlpacaEval 1.0 有关，且自此之后未进行过更新
 
-AlpacaEval 提供了一些可视化工具，帮助您分析和改进自动评估管道。我们简要说明并再次提供笔记本，以便进行更多分析。对于我们考虑的所有指标的描述，请参阅 [这些指标究竟是如何计算的](https://github.com/tatsu-lab/alpaca_eval#evaluators&#41)
-
+AlpacaEval 提供了一些可视化工具，帮助您分析和改进自动评估管道。我们简要说明并再次提供笔记本，以便进行更多分析。对于我们考虑的所有指标的描述，请参阅 [这些指标究竟是如何计算的](https://github.com/tatsu-lab/alpaca_eval#evaluators))
 
 ## 长度控制羊驼评估（LCAE)
-
 
 **长度控制的 AlpacaEval 可视化：**
 [![分析评价器](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tatsu-lab/alpaca_eval/blob/main/notebooks/figured_length_controlled.ipynb)
@@ -873,15 +856,14 @@ AlpacaEval 提供了一些可视化工具，帮助您分析和改进自动评估
 本笔记本展示了我们为减轻自动注释器的长度偏差而考虑的不同方案。
 
 在此，我们简要总结了主要结果。即
+
 - **LCAE 与 Chat Arena 的相关性从 AlpacaEval 2.0 的 0.94 提高到 0.98**。这使得 LCAE 成为与 Chat Arena 相关性最高的基准，如下图所示。
 
 <p float="left" align="middle">
 <img src="figures/chat_correlations.png" alt="LC AlpacaEval is the most highly correlated benchmark with Chat Arena." width="500"/>
 </p>
 
-- **LCAE 会降低游戏的可玩性** AlpacaEval 的一个主要问题是，您可以通过增加输出的长度来提高胜率。例如，在 AlpacaEval 2.0 中，当提示 "尽可能提供更多细节 "时，基线（50%）的胜率上升到 64%，而当提示 "尽可能简洁，同时仍提供回答问题所需的所有信息 "时，胜率下降到 23%。总体而言，AlpacaEval 的相对长度可玩性为 21%，而 LCAE 则降至 6%，因此通过提示长度可玩性降低了 3 倍。如下图所示。 
-
-
+- **LCAE 会降低游戏的可玩性** AlpacaEval 的一个主要问题是，您可以通过增加输出的长度来提高胜率。例如，在 AlpacaEval 2.0 中，当提示 "尽可能提供更多细节 "时，基线（50%）的胜率上升到 64%，而当提示 "尽可能简洁，同时仍提供回答问题所需的所有信息 "时，胜率下降到 23%。总体而言，AlpacaEval 的相对长度可玩性为 21%，而 LCAE 则降至 6%，因此通过提示长度可玩性降低了 3 倍。如下图所示。
 
 <p float="left" align="middle">
 <img src="figures/length_gameability.png" alt="LC AlpacaEval decreases length gameability of the benchmark." width="500"/>
@@ -889,11 +871,9 @@ AlpacaEval 提供了一些可视化工具，帮助您分析和改进自动评估
 
 - 我们可以预测不同基线的成绩** 使用 GLM 控制长度偏差还有一个好处。我们现在有了一个模型，可以预测模型在不同基线下的胜率。特别是，我们的 GLM 具有许多很好的特性，例如，"win_rate(m,b) = 1 - win_rate(b,m) （在 [0,1]〕 内）"和 "win_rate(m,m) = 0.5"。如下图所示。
 
-
 <p float="left" align="middle">
 <img src="figures/different_baselines.png" alt="Predicted win rate for different baselines" width="500"/>
 </p>
-
 
 最后，请注意我们只控制了长度偏差。我们没有控制其他已知的偏差，例如自动注释者更喜欢与其模型相似的输出结果。虽然我们可以控制这一点，但在实践中，我们发现这个问题不如长度偏差那么严重。原因有二：（1）这主要是排行榜中的单一模型，因为对自动注释器输出的微调似乎不会对胜率产生太大影响；（2）偏差实际上没有人们想象的那么强烈。例如，我们在下面展示了由三种不同模型自动标注的排行榜子集，我们可以看到模型的排名完全相同。特别是，"claude-3-opus "更喜欢 "gpt4_preview"，而 "mistral-large "更喜欢前两者。
 
@@ -946,7 +926,6 @@ AlpacaEval 提供了一些可视化工具，帮助您分析和改进自动评估
 灰色单元格对应于在 805 个样本中没有显著差异的模型对。
 y 轴和 x 轴分别按第一个和第二个模型的胜率排序。
 
-
 <p float="left" align="middle">
 <img src="figures/plot_paired_ttest_nsamples.png" alt="Number of samples needed to distinguish pairs in the Claude leaderboard" width="500"/>
 </p>
@@ -967,6 +946,7 @@ y 轴和 x 轴分别按第一个和第二个模型的胜率排序。
 # 引用
 
 请根据您使用和引用的内容考虑引用以下内容：
+
 - 代码、结果和一般基准： alpaca_eval（本软件仓库）。请指明您使用的是 AlpacaEval 还是 AlpacaEval 2.0。关于长度控制胜率，请参阅下文。
 - **长度控制（LC）胜率**： 长度控制胜率： `alpaca_eval_length`.
 - 人类注释： `dubois2023alpacafarm` ([AlpacaFarm](https://arxiv.org/abs/2305.14387))
@@ -1032,7 +1012,6 @@ alpaca_eval --model_outputs … --is_recompute_metrics_only True
 
 </details>
 
-
 <details>
   <summary><h2 tabindex="-1" dir="auto">AlpacaEval 2.0</h2></summary>
 AlpacaEval 2.0 是 AlpacaEval 的新版本。以下是不同之处：
@@ -1065,7 +1044,7 @@ AlpacaEval 是对 [AlpacaFarm](https://github.com/tatsu-lab/alpaca_farm) 中自�
 以下是主要区别：
 
 - AlpacaEval 将指令和输入合并**： AlpacaEval 评估与 AlpacaFarm 评估相同，但指令和输入字段合并为 `{instruction}/n/n{input}`。这影响了 AlpacaFarm 评估集中 1/4 的示例（[self-instruct](https://arxiv.org/abs/2212.10560) 子集）。
-这种简化为那些没有通过区分两个字段来训练的模型提供了更公平的比较。
+  这种简化为那些没有通过区分两个字段来训练的模型提供了更公平的比较。
 - **AlpacaEval 可处理更长的世代**： AlpacaFarm 中的模型最多只能生成 300 个代币。在 AlpacaEval 中，我们将这一数字改为 2000。请注意，这也会影响参考世代 (`text-davinci-003`)、
   因此 AlpacaEval 的结果无法与 AlpacaFarm 的结果相提并论，即使是在没有输入字段的示例中也是如此。
 - AlpacaEval 消除了标注者内部和标注者之间的差异**： AlpacaFarm 模拟器在模式行为和多样性方面复制了人类注释。
@@ -1095,38 +1074,38 @@ AlpacaEval 是对 [AlpacaFarm](https://github.com/tatsu-lab/alpaca_farm) 中自�
 
 </details>
 
-
 <details>
   <summary><h2 tabindex="-1" dir="auto">解释注释</h2></summary>
 
-对于所有模型，您都可以在`results/<model_name>/*/annotations.json`下找到自动注释。注释有以下几列：
+对于所有模型，您都可以在 `results/<model_name>/*/annotations.json`下找到自动注释。注释有以下几列：
+
 - instruction`：提示
 - 生成器_1"：基准模型
 - 输出_1"：基准模型的输出
 - 生成器_2"：正在评估的模型
 - `output_2`: 被评估模型的输出结果
 - 注释器`：自动注释器
-- preference`：自动标注器的结果。这是一个介于 1 和 2 之间的浮点数。接近 1 表示自动注释器更喜欢`输出_1`，接近 2 表示自动注释器更喜欢`输出_2`。对于 AlpacaEval 2.0，"preference-1 "对应于 "输出_1 "被首选的概率。对于 AlpacaEval 1.0，如果 `输出_1`是首选，则 `偏好`为 1；如果 `输出_2`是首选，则 `偏好`为 2；如果两者相同，则 `偏好`为 1.5。胜率总是`(preference-1).mean()`。
+- preference `：自动标注器的结果。这是一个介于 1 和 2 之间的浮点数。接近 1 表示自动注释器更喜欢`输出_1 `，接近 2 表示自动注释器更喜欢`输出_2 `。对于 AlpacaEval 2.0，"preference-1 "对应于 "输出_1 "被首选的概率。对于 AlpacaEval 1.0，如果 `输出_1 `是首选，则 `偏好 `为 1；如果 `输出_2 `是首选，则 `偏好 `为 2；如果两者相同，则 `偏好 `为 1.5。胜率总是`(preference-1).mean()`。
 - raw_completion`：自动注释器的原始输出。
 
 **思维链**
 
-对于某些注释器，例如`alpaca_eval_cot_gpt4_turbo_fn`，我们使用**思维链推理**来使模型偏好更易于解释。这些内容可以在 "concise_explanation "中找到。要解释它们，还应该查看 `referenced_models` ，它将临时模型名称（在提示中）转换为实际输出。下面，我们将就幕后发生的事情提供更多解释。
+对于某些注释器，例如 `alpaca_eval_cot_gpt4_turbo_fn`，我们使用**思维链推理**来使模型偏好更易于解释。这些内容可以在 "concise_explanation "中找到。要解释它们，还应该查看 `referenced_models` ，它将临时模型名称（在提示中）转换为实际输出。下面，我们将就幕后发生的事情提供更多解释。
 
-您可以查看 `annotations.json` 中的 `raw_annotations["concise_explanation]` 列（例如 [此处](https://github.com/tatsu-lab/alpaca_eval/tree/main/results/gpt4/alpaca_eval_cot_gpt4_turbo_fn/annotations.json)），其中包含自动注释器的思维推理链。请注意，raw_annotations 不会因输出顺序的随机化而改变。特别是，`"m"` 和 `"M"`有时指第一个模型（参考），有时指第二个模型（正在评估的模型）。要了解所指的是哪个模型，应使用列 `preference` 和 `ordered_models`。为了方便起见，我们添加了一列`"referenced_models"`，将模型名称映射到相应的输出。例如，在下面的注释中，我们可以看到首选项是 1.0（即 `output_1`），对应于 `concise_explanation` 中的模型 `M`（见 `ordered_models`）。 
+您可以查看 `annotations.json` 中的 `raw_annotations["concise_explanation]` 列（例如 [此处](https://github.com/tatsu-lab/alpaca_eval/tree/main/results/gpt4/alpaca_eval_cot_gpt4_turbo_fn/annotations.json)），其中包含自动注释器的思维推理链。请注意，raw_annotations 不会因输出顺序的随机化而改变。特别是，`"m"` 和 `"M"`有时指第一个模型（参考），有时指第二个模型（正在评估的模型）。要了解所指的是哪个模型，应使用列 `preference` 和 `ordered_models`。为了方便起见，我们添加了一列 `"referenced_models"`，将模型名称映射到相应的输出。例如，在下面的注释中，我们可以看到首选项是 1.0（即 `output_1`），对应于 `concise_explanation` 中的模型 `M`（见 `ordered_models`）。
 
-```json 
+```json
 {
-  "说明"： "美国各州的名称是怎么来的？
+  "说明"： "美国各州的名称是怎么来的？"
   "输出_1"： "美国各州的名称来源于各种语言和资料，包括美国本土语言、欧洲语言（主要是英语、西班牙语和法语）以及其他历史影响。以下是一些州名由来的简要概述：\n\n1. **美国土著语言**： 许多州的名称来自美洲原住民的词汇或部落名称，通常来自生活在这些地区或附近的原住民的语言： Possibly derived from the Choctaw language, meaning \"thicket clearers.\"\n - **康涅狄格州**： 源于一个 Mohegan-Pequot 词，意思是 "潮汐长河"： [...]",
-  "generator_1"： "gpt4_1106_preview"、
-  "数据集"： "helpful_base"、
+  "generator_1"： "gpt4_1106_preview",
+  "数据集"： "helpful_base",
   "输出_2"： "美国 50 个州的名称有多种来源，包括美洲土著语言、欧洲语言和历史人物。下面简要介绍一些州的名称由来：\n\n1. 美洲原住民的起源： 许多州的名称源自美洲土著语言。例如，阿拉巴马州来自乔克托语（Choctaw），意思是 "植物采集者 "或 "草药采集者"。同样，密西西比（Mississippi）这个名字来自奥吉布韦语（Ojibwe），意思是大河。欧洲语言： [...].",
-  "generator_2"： "gpt4"、
-  "annotator"： "alpaca_eval_cot_gpt4_turbo_fn"、
+  "generator_2"： "gpt4",
+  "annotator"： "alpaca_eval_cot_gpt4_turbo_fn",
   "偏好"： 1.0,
   "raw_completion"： {
-    "concise_explanation"： "模式 M 提供了更详细、更有条理的答复，包括每个类别的粗体标题和更广泛的例 子。它还增加了 "其他欧洲语言 "和 "语言与影响的结合 "等类别，从而增加了解释的深度。模型 m 的答案准确，但不够全面，而且缺乏模型 M 答案中的清晰结构、
+    "concise_explanation"： "模式 M 提供了更详细、更有条理的答复，包括每个类别的粗体标题和更广泛的例 子。它还增加了 "其他欧洲语言 "和 "语言与影响的结合 "等类别，从而增加了解释的深度。模型 m 的答案准确，但不够全面，而且缺乏模型 M 答案中的清晰结构",
     "有序模型"： [
       {
         "模型"： "M",
@@ -1145,7 +1124,6 @@ AlpacaEval 是对 [AlpacaFarm](https://github.com/tatsu-lab/alpaca_farm) 中自�
 }
 ```
 
-
 </details>
 
 <details>
@@ -1156,7 +1134,6 @@ AlpacaEval 是对 [AlpacaFarm](https://github.com/tatsu-lab/alpaca_farm) 中自�
 - 2024 年 1 月 2 日：添加了 Azure API 和更通用的客户端配置设置方法。参见 [此处](https://github.com/tatsu-lab/alpaca_eval/tree/main/client_configs/README.md)
 - 2023 年 6 月 19 日：添加任何人都可使用的排行榜 `chatgpt_fn`（无等待名单）。
 - 2023 年 6 月 19 日：更新为使用 [OpenAI 的函数调用](https://openai.com/blog/function-calling-and-other-api-updates)。
-  举例说明： [`chatgpt_fn`](https://github.com/tatsu-lab/alpaca_eval/tree/main/src/alpaca_eval/evaluators_configs/chatgpt_fn)
-  或 [`alpaca_eval_gpt4_fn`](https://github.com/tatsu-lab/alpaca_eval/tree/main/src/alpaca_eval/evaluators_configs/alpaca_eval_gpt4_fn).
+  举例说明： [`chatgpt_fn`](https://github.com/tatsu-lab/alpaca_eval/tree/main/src/alpaca_eval/evaluators_configs/chatgpt_fn) 或 [`alpaca_eval_gpt4_fn`](https://github.com/tatsu-lab/alpaca_eval/tree/main/src/alpaca_eval/evaluators_configs/alpaca_eval_gpt4_fn).
 
 </details>
