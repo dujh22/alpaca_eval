@@ -22,10 +22,11 @@
 ---
 
 <details open>
-  <summary><b>Table of Contents</b></summary>
+  <summary><b>目录</b></summary>
+
 
 1. [概述](#overview)
-2. [Quick Start](#quick-start)
+2. [快速开始](#快速开始)
 2. [Leaderboards and how to interpret them](#leaderboards-and-how-to-interpret-them)
     - [Models](#models)
     - [评估](#评估)
@@ -46,7 +47,7 @@
 8. [Additional information](#additional-information)
    - [Length-controlled win rates](#length-controlled-win-rates)
    - [AlpacaEval 2.0](#alpacaeval-20)
-   - [Data Release](#data-release)
+   - [数据发布](#数据发布)
    - [Differences with AlpacaFarm](#differences-with-alpacafarm)
    - [Related work](#related-work)
    - [Interpreting annotations](#interpreting-annotations)
@@ -63,50 +64,46 @@ AlpacaEval提供以下功能：
 - [**排行榜**](https://tatsu-lab.github.io/alpaca_eval/): AlpacaEval评估集上常用模型的排行榜。**警告**:自动评估器(如GPT-4)可能偏向于产生较长输出的模型和/或在评估器底层模型上进行微调的模型(如GPT-4)。
 - [**自动评估器**](#评估): 与人类高度一致的自动评估器(在20K个注释上进行了验证)。我们通过测量强大的LLM(例如GPT-4)倾向于该模型的输出而不是参考模型的输出的次数来评估模型。默认情况下，我们的评估器启用缓存和输出随机化。
 - [**用于构建自动评估器的工具包**](#analysis): 一个简单的接口，用于构建高级自动评估器(例如，使用缓存、批处理或多注释器)并分析它们(质量、价格、速度、统计能力、偏差、方差等)。
-- [**Human evaluation data**](#data-release): 20K human preferences between a given and reference model
-  on the [AlpacaFarm](https://github.com/tatsu-lab/alpaca_farm/tree/main)
-  evaluation set. 2.5K of these are cross-annotations (4 humans annotating the same 650 examples).
-- [**AlpacaEval dataset**](https://huggingface.co/datasets/tatsu-lab/alpaca_eval/blob/main/alpaca_eval.json): a simplification
-  of [AlpacaFarm's](https://github.com/tatsu-lab/alpaca_farm/tree/main) evaluation set, where "instructions" and "inputs" are merged into one field, and reference outputs are longer. [Details here](#data-release).
-
-
-
+- [**人类评估数据**](#数据发布)： 在 [AlpacaFarm](https://github.com/tatsu-lab/alpaca_farm/tree/main)评估集上给定模型和参考模型之间的 20K 人类偏好。其中 2.5K 为交叉注释（4 人注释相同的 650 个示例）。
+- [**AlpacaEval数据集**](https://huggingface.co/datasets/tatsu-lab/alpaca_eval/blob/main/alpaca_eval.json)：[AlpacaFarm](https://github.com/tatsu-lab/alpaca_farm/tree/main)评估集的简化版，其中 "指令 "和 "输入 "合并为一个字段，参考输出更长。[此处有详细信息](#data-release)。
 
 <details>
-  <summary><b>When to use and not use AlpacaEval?</b></summary>
+  <summary><b>何时使用或不使用 AlpacaEval？</b></summary>
 
-**When to use AlpacaEval?**
-Our automatic evaluator is a quick and cheap proxy for human evaluation of simple
-instruction-following tasks.
-It is useful if you
-have to run many evaluations quickly, e.g., during model development.
+**何时使用 AlpacaEval？**
 
-**When not to use AlpacaEval?**
-As any other automatic evaluator, AlpacaEval should **not replace human evaluation in
-high-stake decision-making**, e.g., to decide on model release. In particular, AlpacaEval is limited by the fact
-that (1) the instructions in the eval set might not be representative of advanced usage of LLMs; (2) automatic
-evaluators may have biases such as favoring style over
-factuality of the answer; and (3) AlpacaEval does not measure the risks that a model could cause.
-Details in [limitations](#limitations).
+我们的自动评估器是一种快速、廉价的人工评估工具，可替代简单任务的人工评估。
+如果您需要快速运行许多评估，例如在模型开发过程中，它就非常有用。
+
+**何时不使用 AlpacaEval？**
+
+与其他任何自动评估工具一样，AlpacaEval **不应在高风险决策**（如决定是否发布模型）中取代人工评估。AlpacaEval 尤其受到以下事实的限制
+(1) 评估集中的指令可能无法代表 LLM 的高级用法；
+
+(2) 自动评价器可能存在偏差，例如偏重风格而非事实性；
+
+(3) AlpacaEval 无法衡量模型可能造成的风险。
+
+具体细节参照[限制](#限制)。
 
 </details>
 
 
-# Quick Start
+# 快速开始
 
-To install the stable release, run
+要安装稳定版，请运行
 
 ```bash
 pip install alpaca-eval
 ```
 
-To install the nightly version, run
+要安装夜间版本，请运行
 
 ```bash
 pip install git+https://github.com/tatsu-lab/alpaca_eval
 ```
 
-Then you can use it as follows:
+之后你可以按照如下方式使用它:
 
 ```bash
 export OPENAI_API_KEY=<your_api_key> # for more complex configs, e.g. using Azure or switching clients see client_configs/README.md 
@@ -1263,7 +1260,8 @@ By default, AlpacaEval 2.0 will be used from `pip install alpaca_eval==0.5`. If 
 </details>
 
 <details>
-  <summary><h2 tabindex="-1" dir="auto">Data Release</h2></summary>
+  <summary><h2 tabindex="-1" dir="auto">数据发布</h2></summary>
+
 
 As part of AlpacaEval, we release the following data:
 
