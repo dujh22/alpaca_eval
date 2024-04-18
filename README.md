@@ -175,7 +175,6 @@ alpaca_eval --model_outputs 'example/outputs.json'
 
 <details>
   <summary><b>这些指标究竟是如何计算出来的？</b></summary>
-
 **获胜率**：获胜率衡量的是模型输出比参考输出（AlpacaEval 的 `test-davinci-003` 和 AlpacaEval 2.0 的 `gpt4_turbo`）更受青睐的时间比例。
 更具体地说，为了计算胜率，我们从 ApacaEval 数据集中收集了所需模型在每条指令上的输出对。
 然后，我们将每个输出与我们的参考模型（例如 `text-davinci-003`）在同一指令上的输出配对。
@@ -233,8 +232,6 @@ alpaca_eval --model_outputs 'example/outputs.json'
 <details>
   <summary><b>这些指标究竟是如何计算出来的？</b></summary>
 
-We now explain in words how we compute the metrics in the table
-above. [The code is here](https://github.com/tatsu-lab/alpaca_eval/blob/f05cbd651b79ac93906b19d01fe443b45828b0f2/src/alpaca_eval/analyze.py#L366).
 现在，我们将用文字解释如何计算上表中的指标。[代码在此](https://github.com/tatsu-lab/alpaca_eval/blob/f05cbd651b79ac93906b19d01fe443b45828b0f2/src/alpaca_eval/analyze.py#L366)。
 
 **Human Agreement人类一致性**：这衡量的是当前注释者与我们[交叉注释集](https://huggingface.co/datasets/tatsu-lab/alpaca_eval/blob/main/alpaca_farm_human_crossannotations.json)中约 650 个注释的大多数人类偏好之间的一致性，其中每个示例包含 4 个人类注释。
