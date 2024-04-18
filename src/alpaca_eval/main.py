@@ -220,17 +220,18 @@ def evaluate(
         )
 
 
+# 定义 evaluate_from_model 函数
 def evaluate_from_model(
-    model_configs: Union[AnyPath, dict],
-    reference_model_configs: Optional[Union[AnyPath, dict]] = None,
-    evaluation_dataset: AnyLoadableDF = constants.ALPACAEVAL_REFERENCE_OUTPUTS,
-    annotators_config: AnyPath = constants.DEFAULT_ANNOTATOR_CONFIG,
-    output_path: AnyPath = "auto",
-    max_instances: int = None,
-    is_strip_output: bool = True,
-    is_load_outputs: bool = True,
-    chunksize: int = 64,
-    **kwargs,
+    model_configs: Union[AnyPath, dict],  # 模型配置，可以是路径或字典
+    reference_model_configs: Optional[Union[AnyPath, dict]] = None,  # 参考模型配置，可以是路径或字典，可选
+    evaluation_dataset: AnyLoadableDF = constants.ALPACAEVAL_REFERENCE_OUTPUTS,  # 评估数据集，默认使用ALPACAEVAL_REFERENCE_OUTPUTS
+    annotators_config: AnyPath = constants.DEFAULT_ANNOTATOR_CONFIG,  # 注释者配置，使用默认配置
+    output_path: AnyPath = "auto",  # 输出路径，默认自动生成
+    max_instances: int = None,  # 最大实例数，可选，如果不指定则处理所有实例
+    is_strip_output: bool = True,  # 是否去除输出的前后空格，默认为True
+    is_load_outputs: bool = True,  # 是否加载已有的输出，默认为True
+    chunksize: int = 64,  # 生成输出前的数据块大小，默认为64
+    **kwargs,  # 其他可传递给 evaluate 函数的参数
 ):
     """Evaluate a model from HuggingFace or an API provider. This is a wrapper around `evaluate` which includes
     generating from
@@ -277,26 +278,32 @@ def evaluate_from_model(
     kwargs:
         Other kwargs to `evaluate`
     """
+    # 加载或将评估数据集转换为DataFrame
     df_dataset = utils.load_or_convert_to_dataframe(evaluation_dataset)
 
+    # 如果指定了数据块大小且不加载输出，则强制设置 is_load_outputs 为 True
     if chunksize is not None and not is_load_outputs:
         logging.info("`is_load_outputs` has to be true to use chunksize. Setting it to True.")
         is_load_outputs = True
 
+    # 如果同时指定了数据块大小和最大实例数，取消数据块大小的设置
     if chunksize is not None and max_instances is not None:
         logging.info("cannot use `chunksize` with max_instances. Setting `chunksize` to None.")
         chunksize = None
 
+    # 加载模型配置
     model_configs = utils.load_configs(model_configs, relative_to=constants.MODELS_CONFIG_DIR)
     if reference_model_configs is not None:
         reference_model_configs = utils.load_configs(reference_model_configs, relative_to=constants.MODELS_CONFIG_DIR)
 
+    # 自动确定输出路径
     if output_path == "auto":
         output_path = Path("results") / list(model_configs.keys())[0]
     if output_path is not None:
         output_path = Path(output_path)
         output_path.mkdir(exist_ok=True, parents=True)
 
+    # 定义获取完成结果的函数
     def get_completions(configs, df: pd.DataFrame, old_output_path: Optional[Path] = None):
         columns_to_keep = ["dataset", "instruction", "output", "generator"]
         columns_to_keep = [c for c in columns_to_keep if c in df.columns]
@@ -335,6 +342,7 @@ def evaluate_from_model(
 
         return curr_outputs
 
+    # 循环处理数据集的每一个数据块
     for df_chunk in utils.dataframe_chunk_generator(
         df_dataset, chunksize=chunksize, tqdm_desc="Chunking for generation"
     ):
@@ -345,6 +353,7 @@ def evaluate_from_model(
         else:
             model_outputs = get_completions(model_configs, df=df_chunk)
 
+        # 如果没有指定参考模型配置，则使用数据集的输出列作为参考输出
         if reference_model_configs is None:
             if "output" not in df_chunk.columns:
                 raise ValueError("evaluation_dataset should have a column 'output' containing references outputs")
@@ -356,15 +365,18 @@ def evaluate_from_model(
                 old_output_path=output_path / "reference_outputs.json",
             )
 
+        # 如果指定了输出路径，则保存模型输出和参考输出
         if output_path is not None:
             model_outputs.to_json(output_path / "model_outputs.json", orient="records", indent=2)
             reference_outputs.to_json(output_path / "reference_outputs.json", orient="records", indent=2)
 
+    # 如果使用默认参考输出，则更新参考输出的数据路径
     if reference_model_configs is None:
         # using a default reference outputs => uses the right leaderboard
         if evaluation_dataset in [constants.ALPACAEVAL_REFERENCE_OUTPUTS]:
             reference_outputs = evaluation_dataset
 
+    # 调用 evaluate 函数，传入参数并返回结果
     return evaluate(
         model_outputs=model_outputs,
         reference_outputs=reference_outputs,

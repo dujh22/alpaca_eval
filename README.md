@@ -197,7 +197,7 @@ alpaca_eval --model_outputs 'example/outputs.json'
 3. 随机调整输出的顺序，以避免位置偏差
 4. 将指令和输出格式化为零次提示 [following zero-shot prompt](https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/evaluators_configs/alpaca_eval_gpt4/alpaca_eval.txt),，要求按偏好顺序排列输出
 5. 使用 GPT4 完成提示，温度=0
-6. 解析完成后的偏好并返回
+6. 解析完成后的偏好并返回 
 
 注释器是 [AlpacaFarm](https://github.com/tatsu-lab/alpaca_farm) and [Aviary](https://github.com/ray-project/aviary/tree/master) 评估器的混合体（并深受其影响）。
 特别是，我们使用了与 AlpacaFarm 相同的代码（缓存/随机化/超参数），但使用了与 Aviary 类似的排名提示。

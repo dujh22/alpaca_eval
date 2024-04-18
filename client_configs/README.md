@@ -3,11 +3,11 @@
 客户端配置是 json yaml，可将模型名称映射到用于实例化 OpenAI 等客户端的配置列表。
 我们使用列表允许在达到速率限制时切换客户端（例如，使用不同的组织 ID 或使用 Azure）。
 
-## Configuring OpenAI
+## 配置 OpenAI
 
-To use the new OpenAI configuration, create `openai_configs.yaml` in the current directory. The configuration should be a dictionary whose values are a list of configurations for OpenAI's client. We use a list to allow switching OpenAI client when you hit a rate limit (e.g. using a different organization ID or using Azure).
+要使用新的 OpenAI 配置，请在当前目录下创建 `openai_configs.yaml`。配置应该是一个字典，其值是 OpenAI 客户端的配置列表。我们使用该列表允许在达到速率限制时切换 OpenAI 客户端（例如，使用不同的组织 ID 或使用 Azure）。
 
-Here's the simplest configuration if you don't need to switch between OpenAI clients:
+如果不需要在 OpenAI 客户端之间切换，下面是最简单的配置：
 
 ```yaml
 default:
@@ -15,7 +15,7 @@ default:
       organization: "<your organization ID>"
 ```
 
-Here's if you want to switch between organization IDs when you hit a rate limit:
+如果您想在遇到费率限制时在不同组织 ID 之间切换，请使用下面的方法：
 
 ```yaml
 default:
@@ -26,9 +26,9 @@ default:
       organization: "<your 2nd organization ID>"
 ```
 
-Note that the order does NOT matter: we will select randomly the client. This allows running multiple jobs in parallel while decreasing the chance of using the same client.
+请注意，顺序并不重要：我们将随机选择客户端。这样可以并行运行多个作业，同时减少使用同一客户端的机会。
 
-Sometimes you may need configurations that are model specific and use a different client class, for example when using Azure's client. In this case, you can do the following:
+有时，您可能需要特定于模型并使用不同客户端类的配置，例如在使用 Azure 客户端时。在这种情况下，可以执行以下操作：
 
 ```yaml
 default:
@@ -49,16 +49,16 @@ gpt-4-1106-preview: # only when using `model_name: gpt-4-1106-preview`
       api_version: "2023-07-01-preview"
 ```
 
-Here the configurations will be appended to `default` when using the model_name `gpt-4` in the `evaluators_configs` such as [here](https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/evaluators_configs/alpaca_eval_gpt4/configs.yaml#L6). When hitting a rate limit we will be then switching between two OpenAI clients and one Azure, each using the same underlying model. Note that when using Azure, some parameters might be slightly different and thus cause issues, as Azure typically lags a few months behind OpenAI's API. **Unfortunately it's not currently possible to use Azure with AlpacaEval2.0 as they do not provide logprobs**, this will hopefully be fixed soon.
+在这里，当在 evaluators_configs 中使用 model_name gpt-4 时，配置将被附加到默认值，例如[这里](https://github.com/tatsu-lab/alpaca_eval/blob/main/src/alpaca_eval/evaluators_configs/alpaca_eval_gpt4/configs.yaml#L6)。当遇到速率限制时，我们将在两个 OpenAI 客户端和一个 Azure 客户端之间切换，每个客户端都使用相同的底层模型。请注意，在使用 Azure 时，某些参数可能会略有不同，从而导致问题，因为 Azure 通常比 OpenAI 的 API 滞后几个月。遗憾的是，由于 Azure 不提供 logprobs，因此目前无法在 AlpacaEval2.0 中使用 Azure。
 
-## Fully backward compatible
+## 完全向后兼容
 
-Prior to `alpaca_eval==0.3.7` the recommended way of setting the client was to use the environment variables `OPENAI_API_KEYS` / `OPENAI_ORGANIZATION_IDS`, which are lists of comma separated constants. **Using those will still work but will raise a warning**. Under the hood, if:
+在 `alpaca_eval==0.3.7` 之前，设置客户端的推荐方法是使用环境变量 `OPENAI_API_KEYS` / `OPENAI_ORGANIZATION_IDS`，它们是逗号分隔的常量列表。**使用这些变量仍然有效，但会引发警告。**在引擎盖下，如果
 
-1. `openai_configs.yaml` does not exist, and
-2. the environment variables are set
+1. openai_configs.yaml` 不存在，并且
+2. 环境变量已设置
 
-then the result will essentially correspond to the following config (where keys should be expanded):
+则结果基本上与以下配置一致（键值应展开）：
 
 ```yaml
 default:
